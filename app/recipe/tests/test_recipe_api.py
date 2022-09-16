@@ -1,6 +1,8 @@
 """
 Tests for recipe APIs
 """
+
+
 from decimal import Decimal
 
 from django.contrib.auth import get_user_model
@@ -17,6 +19,7 @@ from recipe.serializers import (
     RecipeSerializer,
     RecipeDetailSerializer,
 )
+
 
 RECIPES_URL = reverse('recipe:recipe-list')
 
@@ -55,6 +58,7 @@ class PublicRecipeAPITests(TestCase):
 
         self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
 
+
 class PrivateRecipeAPITests(TestCase):
     """Test authantecited API requests."""
 
@@ -78,7 +82,10 @@ class PrivateRecipeAPITests(TestCase):
 
     def test_recipe_list_limited_to_user(self):
         """Test lists of recipes is limited to authanticated user."""
-        other_user = create_user(email='other@example.com', password='password123')
+        other_user = create_user(
+            email='other@example.com',
+            password='password123'
+            )
         create_recipe(user=other_user)
         create_recipe(user=self.user)
 

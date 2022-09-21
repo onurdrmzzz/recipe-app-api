@@ -15,7 +15,7 @@ class UserManager(BaseUserManager):
     """Manager for users."""
 
     def create_user(self, email, password=None, **extra_fields):
-        """Create, save and return a new user"""
+        """Create, save and return a new user."""
         if not email:
             raise ValueError('User must have an email address.')
         user = self.model(email=self.normalize_email(email), **extra_fields)
@@ -57,7 +57,7 @@ class Recipe(models.Model):
     time_minutes = models.IntegerField()
     price = models.DecimalField(max_digits=5, decimal_places=2)
     link = models.CharField(max_length=255, blank=True)
-    tag = models.ManyToManyField('Tag')
+    tags = models.ManyToManyField('Tag')
 
     def __str__(self):
         return self.title

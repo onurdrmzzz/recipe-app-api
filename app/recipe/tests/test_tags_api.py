@@ -1,5 +1,5 @@
 """
-Test for the tags API.
+Tests for the tags API.
 """
 
 
@@ -29,7 +29,7 @@ def create_user(email='user@example.com', password='testpass123'):
 
 
 class PublicTagsApiTests(TestCase):
-    """Test unauthanticated API requests."""
+    """Test unauthenticated API requests."""
 
     def setUp(self):
         self.client = APIClient()
@@ -42,7 +42,7 @@ class PublicTagsApiTests(TestCase):
 
 
 class PrivateTagsApiTests(TestCase):
-    """Test authanticated API requests."""
+    """Test authenticated API requests."""
 
     def setUp(self):
         self.user = create_user()
@@ -62,8 +62,8 @@ class PrivateTagsApiTests(TestCase):
         self.assertEqual(res.data, serializer.data)
 
     def test_tags_limited_to_user(self):
-        """Test listed tags is limited to authanticated user."""
-        user2 = create_user(email='user2@example.com', password='testpass123')
+        """Test list of tags is limited to authenticated user."""
+        user2 = create_user(email='user2@example.com')
         Tag.objects.create(user=user2, name='Fruity')
         tag = Tag.objects.create(user=self.user, name='Comfort Food')
 
@@ -77,9 +77,7 @@ class PrivateTagsApiTests(TestCase):
         """Test updating a tag."""
         tag = Tag.objects.create(user=self.user, name='After Dinner')
 
-        payload = {
-            'name': 'Dessert'
-        }
+        payload = {'name': 'Dessert'}
         url = detail_url(tag.id)
         res = self.client.patch(url, payload)
 

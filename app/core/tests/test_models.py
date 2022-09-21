@@ -9,15 +9,15 @@ from django.contrib.auth import get_user_model
 from core import models
 
 
-def create_user(email='user@exampl.com', password='testpass123'):
-    """Create and return a new user"""
+def create_user(email='user@example.com', password='testpass123'):
+    """Create and return a new user."""
     return get_user_model().objects.create_user(email, password)
 
 
 class ModelTests(TestCase):
     """Test models."""
 
-    def test_create_user_email_successful(self):
+    def test_create_user_with_email_successful(self):
         """Test creating a user with an email is successful"""
         email = 'test@example.com'
         password = 'testpass123'
@@ -34,7 +34,7 @@ class ModelTests(TestCase):
         sample_emails = [
             ['test1@EXAMPLE.com', 'test1@example.com'],
             ['Test2@Example.com', 'Test2@example.com'],
-            ['TEST3@EXAMPLE.COM', 'TEST3@example.com'],
+            ['TEST3@EXAMPLE.com', 'TEST3@example.com'],
             ['test4@example.COM', 'test4@example.com'],
         ]
         for email, expected in sample_emails:
@@ -42,16 +42,17 @@ class ModelTests(TestCase):
             self.assertEqual(user.email, expected)
 
     def test_new_user_without_email_raises_error(self):
-        """Test that creating a user without email raises a ValueError"""
+        """Test that creating a user without an email raises a ValueError"""
         with self.assertRaises(ValueError):
             get_user_model().objects.create_user('', 'test123')
 
     def test_create_superuser(self):
-        """Test creating superuser"""
+        """Test creating a superuser."""
         user = get_user_model().objects.create_superuser(
             'test@example.com',
             'test123',
         )
+
         self.assertTrue(user.is_superuser)
         self.assertTrue(user.is_staff)
 
@@ -59,7 +60,7 @@ class ModelTests(TestCase):
         """Test creating a recipe is successful."""
         user = get_user_model().objects.create_user(
             'test@example.com',
-            'testpass123'
+            'testpass123',
         )
 
         recipe = models.Recipe.objects.create(

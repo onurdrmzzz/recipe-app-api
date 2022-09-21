@@ -62,16 +62,16 @@ class PublicUserApiTests(TestCase):
 
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
         user_exits = get_user_model().objects.filter(
-            email = payload['email']
+            email=payload['email']
         ).exists()
         self.assertFalse(user_exits)
 
     def test_create_token_for_user(self):
         "Test generates token for valid credentials."
         user_details = {
-            'name':'Test Name',
-            'email':'test@exmaple.com',
-            'password':'test-user-password123',
+            'name': 'Test Name',
+            'email': 'test@exmaple.com',
+            'password': 'test-user-password123',
         }
         create_user(**user_details)
 
@@ -140,7 +140,7 @@ class PrivateUserApiTests(TestCase):
 
     def test_update_user_profile(self):
         """Test updating the user profile for the authenticated user."""
-        payload = {'name':'Updated name', 'password':'newpassword123'}
+        payload = {'name': 'Updated name', 'password': 'newpassword123'}
 
         res = self.client.patch(ME_URL, payload)
 

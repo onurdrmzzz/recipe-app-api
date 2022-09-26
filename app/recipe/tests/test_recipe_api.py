@@ -301,7 +301,7 @@ class PrivateRecipeApiTests(TestCase):
         """Test creating a recipe with new ingredients."""
         payload = {
             'title': 'Cauliflower Tacos',
-            'time_minutes': '60',
+            'time_minutes': 60,
             'price': Decimal('4.30'),
             'ingredients': [{'name': 'Cauliflower'}, {'name': 'Salt'}],
         }
@@ -356,7 +356,7 @@ class PrivateRecipeApiTests(TestCase):
         new_ingredient = Ingredient.objects.get(user=self.user, name='Limes')
         self.assertIn(new_ingredient, recipe.ingredients.all())
 
-    def test_update_recipe_assing_ingredient(self):
+    def test_update_recipe_assign_ingredient(self):
         """Test assigning an existing ingredient when updating a recipe."""
         ingredient1 = Ingredient.objects.create(user=self.user, name='Pepper')
         recipe = create_recipe(user=self.user)
@@ -384,6 +384,7 @@ class PrivateRecipeApiTests(TestCase):
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertEqual(recipe.ingredients.count(), 0)
 
+<<<<<<< HEAD
     def test_filter_by_tags(self):
         """Test filtering recipe by tags."""
         r1 = create_recipe(user=self.user, title='Thai Vegetable Curry')
@@ -394,7 +395,7 @@ class PrivateRecipeApiTests(TestCase):
         r2.tags.add(tag2)
         r3 = create_recipe(user=self.user, title='Fish and chips')
 
-        params = {'tags': f'{tag1.id}, {tag2.id}'}
+        params = {'tags': f'{tag1.id},{tag2.id}'}
         res = self.client.get(RECIPES_URL, params)
 
         s1 = RecipeSerializer(r1)
@@ -414,7 +415,7 @@ class PrivateRecipeApiTests(TestCase):
         r2.ingredients.add(in2)
         r3 = create_recipe(user=self.user, title='Red Lentil Dahl')
 
-        params = {'ingredients': f'{in1.id}, {in2.id}'}
+        params = {'ingredients': f'{in1.id},{in2.id}'}
         res = self.client.get(RECIPES_URL, params)
 
         s1 = RecipeSerializer(r1)
@@ -424,6 +425,8 @@ class PrivateRecipeApiTests(TestCase):
         self.assertIn(s2.data, res.data)
         self.assertNotIn(s3.data, res.data)
 
+=======
+>>>>>>> parent of cc0b43c (implemented filtering)
 
 class ImageUploadTests(TestCase):
     """Tests for the image upload API."""
@@ -445,7 +448,7 @@ class ImageUploadTests(TestCase):
         url = image_upload_url(self.recipe.id)
         with tempfile.NamedTemporaryFile(suffix='.jpg') as image_file:
             img = Image.new('RGB', (10, 10))
-            img.save(image_file, format='jpeg')
+            img.save(image_file, format='JPEG')
             image_file.seek(0)
             payload = {'image': image_file}
             res = self.client.post(url, payload, format='multipart')

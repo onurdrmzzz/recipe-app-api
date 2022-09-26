@@ -12,7 +12,7 @@ from rest_framework.test import APIClient
 
 from core.models import (
     Tag,
-    Recipe
+    Recipe,
 )
 
 from recipe.serializers import TagSerializer
@@ -71,6 +71,7 @@ class PrivateTagsApiTests(TestCase):
         tag = Tag.objects.create(user=self.user, name='Comfort Food')
 
         res = self.client.get(TAGS_URL)
+
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertEqual(len(res.data), 1)
         self.assertEqual(res.data[0]['name'], tag.name)
@@ -91,6 +92,7 @@ class PrivateTagsApiTests(TestCase):
     def test_delete_tag(self):
         """Test deleting a tag."""
         tag = Tag.objects.create(user=self.user, name='Breakfast')
+
         url = detail_url(tag.id)
         res = self.client.delete(url)
 

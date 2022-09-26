@@ -178,7 +178,7 @@ class PrivateRecipeApiTests(TestCase):
             self.assertEqual(getattr(recipe, k), v)
         self.assertEqual(recipe.user, self.user)
 
-    def test_user_unable_to_reassign_new_user(self):
+    def test_update_user_returns_error(self):
         """Test changing the recipe user results in an error."""
         new_user = create_user(email='user2@example.com', password='test123')
         recipe = create_recipe(user=self.user)
@@ -384,7 +384,6 @@ class PrivateRecipeApiTests(TestCase):
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertEqual(recipe.ingredients.count(), 0)
 
-<<<<<<< HEAD
     def test_filter_by_tags(self):
         """Test filtering recipe by tags."""
         r1 = create_recipe(user=self.user, title='Thai Vegetable Curry')
@@ -425,8 +424,6 @@ class PrivateRecipeApiTests(TestCase):
         self.assertIn(s2.data, res.data)
         self.assertNotIn(s3.data, res.data)
 
-=======
->>>>>>> parent of cc0b43c (implemented filtering)
 
 class ImageUploadTests(TestCase):
     """Tests for the image upload API."""
